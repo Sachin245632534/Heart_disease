@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Twin AI</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <img src="{{ url_for('static', filename='heart.png') }}" class="logo">
+    <h1>Digital Twin AI</h1>
+  </div>
+  <!-- <div class="brand">
+    <div class="heart-mark"></div>
+    <h1>Digital Twin AI</h1>
+  </div> -->
+
+  <nav>
+    <a href="#" class="nav-link active" id="nav-params">Parameters</a>
+    <a href="#" class="nav-link" id="nav-results">Results</a>
+  </nav>
+</header>
+
+
+<main class="container">
+
+<!-- PARAMETERS -->
+<section class="left-column card" id="params-card">
+
+<h2>Enter patient parameters</h2>
+<p class="helper">Provide clinical inputs to compute risk.</p>
+
+<form id="params-form">
+
+<div class="grid">
+
+<label>
+Age
+<input type="number" name="age" min="0" value="54">
+</label>
+
+<label>
+Sex
+<select name="sex">
+<option value="1">Male</option>
+<option value="0">Female</option>
+</select>
+</label>
+
+<label>
+cp
+<select name="cp">
+<option value="1">Typical angina</option>
+<option value="2">Atypical angina</option>
+<option value="3">Non-anginal</option>
+<option value="4">Asymptomatic</option>
+</select>
+</label>
+
+<label>
+trestbps
+<input type="number" name="trestbps" value="130">
+</label>
+
+<label>
+chol
+<input type="number" name="chol" value="250">
+</label>
+
+<label>
+fbs
+<select name="fbs">
+<option value="1">&gt;120 mg/dl</option>
+<option value="0">&le;120 mg/dl</option>
+</select>
+</label>
+
+<label>
+thalach
+<input type="number" name="thalach" value="150">
+</label>
+
+<label>
+exang
+<select name="exang">
+<option value="1">Yes</option>
+<option value="0">No</option>
+</select>
+</label>
+
+<label>
+oldpeak
+<input type="number" step="0.1" name="oldpeak" value="1.0">
+</label>
+
+<label>
+slope
+<select name="slope">
+<option value="1">Upsloping</option>
+<option value="2">Flat</option>
+<option value="3">Downsloping</option>
+</select>
+</label>
+
+<label>
+ca
+<select name="ca">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+</select>
+</label>
+
+<label>
+thal
+<select name="thal">
+<option value="3">Normal</option>
+<option value="6">Fixed defect</option>
+<option value="7">Reversible defect</option>
+</select>
+</label>
+
+</div>
+
+
+<div class="form-actions">
+
+<button type="button" id="reset-btn" class="btn secondary">
+Reset
+</button>
+
+<div class="model-buttons">
+
+<button type="button" class="btn model-btn active" data-model="rf">
+Random Forest
+</button>
+
+<button type="button" class="btn model-btn" data-model="ann">
+ANN
+</button>
+
+</div>
+
+<button type="submit" class="btn primary">
+Run Prediction
+</button>
+
+</div>
+
+</form>
+
+</section>
+
+
+<!-- RIGHT PANEL -->
+<section class="right-column">
+
+<div class="card model-preview">
+<h3>Model info</h3>
+<p id="model-desc">Random Forest — ensemble tree model</p>
+
+<div class="preview-mini">
+Preview risk: <span id="preview-risk">—</span>
+</div>
+</div>
+
+<div class="card heart-art">
+  <img src="{{ url_for('static', filename='heart.png') }}" class="heart-frame">
+</div>
+
+</section>
+
+
+<!-- RESULTS -->
+<section id="results" class="results-screen hidden card">
+
+<div class="results-left">
+
+<h2>Prediction Result</h2>
+
+<div class="result-ring" id="result-ring">
+<div class="percentage" id="risk-percent">--%</div>
+</div>
+
+<div class="risk-badge" id="risk-badge">—</div>
+
+<div class="result-actions">
+<button class="btn secondary" id="back-btn">Back to parameters</button>
+</div>
+
+</div>
+
+
+<div class="results-right">
+
+<h3>Input parameters</h3>
+
+<canvas id="paramsChart" height="300"></canvas>
+
+<table class="raw-values" id="raw-values"></table>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer class="site-footer">
+<small>
+Values shown are for demonstration; consult a clinician for medical interpretation.
+</small>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+
+</body>
+</html>
